@@ -3,11 +3,7 @@
 #include<string.h>
 int arr[10]; // 스택의 크기 : 10 
 int top = -1; // 기본 스택의 top의 값은 -1 
-void push(int n) {  
-	if (top == 9) { // 빈 값이 없을 때
-		printf("스택에서의 빈 부분이 없습니다.\n");
-		return;
-	}
+void push(int n) {
 	for (int i = 0; i < 10; i++) {
 		if (arr[i] == NULL) { // 빈 값이 있을 떄
 			arr[i] = n;
@@ -15,14 +11,18 @@ void push(int n) {
 			printf("%d를 삽입하였습니다.\n", n);
 			return;
 		}
+		else if (i==9) { // 빈 값이 없을 때
+			printf("스택에서의 빈 부분이 없습니다.\n");
+			return;
+		}
 	}
 }// 넣어주는 함수 
 void pop() {
 	int temp;
-	if (arr[top+1] == NULL|| top <= -1) printf("잘못입력하셨습니다.\n"); // 빈값에 pop을 했을때  
+	if (arr[top + 1] == NULL || top < -1) printf("잘못입력하셨습니다.\n"); // 빈값에 pop을 했을때  
 	else {
-		temp = arr[top+1];
-		arr[top+1] = NULL;
+		temp = arr[top + 1];
+		arr[top + 1] = NULL;
 		printf("%d이 삭제되었습니다. \n", temp);
 		return;
 	}
