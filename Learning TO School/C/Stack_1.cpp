@@ -1,3 +1,5 @@
+#pragma warning(disable:4996)
+#pragma warning(disable:6013)
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -23,7 +25,8 @@ void pop() {
 	else {
 		temp = arr[top + 1];
 		arr[top + 1] = NULL;
-		printf("%d이 삭제되었습니다. \n", temp);
+		printf("%d 삭제되었습니다. \n", temp);
+		top--;
 		return;
 	}
 	return;
