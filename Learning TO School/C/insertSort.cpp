@@ -1,4 +1,5 @@
 #include<stdio.h>
+
 void insertSort(int n, int arr[]){
 	int temp;
 	for(int i = 0;i<n;i++){
@@ -11,6 +12,7 @@ void insertSort(int n, int arr[]){
 		}
 	}
 }
+
 int main(){
 	int n;
 	int arr[10] = {0, };
