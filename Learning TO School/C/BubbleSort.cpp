@@ -1,4 +1,5 @@
 #include<stdio.h>
+
 void bubbleSort(int n, int arr[]){
 	int temp;
 	for(int i = n-1;i>=0;i--){
@@ -11,6 +12,7 @@ void bubbleSort(int n, int arr[]){
 		}
 	}
 }
+
 int main(){
 	int n;
 	int arr[10] = {0, };
