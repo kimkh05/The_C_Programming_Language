@@ -8,24 +8,31 @@
 #include<time.h>
 #include<ctype.h>
 
+#define MAX_WORD_SIZE 30
+// Max_Size 설정
+#define MAX_STRING_SIZE 256
+// Max_String_Size 설정
+
 struct word {
-	char koreanWord[30][256] = { "책", "가방", "노트북", "스마트폴더", "의자", 
+	char koreanWord[MAX_WORD_SIZE][MAX_STRING_SIZE] = { "책", "가방", "노트북", "스마트폴더", "의자",
 								"배구", "농구", "아이스티", "제작자", "비난", 
 								"비료", "대전", "울산", "미국", "중국", 
 								"필리핀", "화장실", "학습실", "출석부" ,"지우개", 
 								"감자", "칠판", "코딩", "제모", "성별", 
-								"밴드", "여름", "겨울", "가을", "봄"};
-	// 한글 단어 30개
+								"밴드", "여름", "겨울", "가을", "봄"
+	};
+	// 한글 단어 MAX_WORD_SIZE개
 
-	char englishWord[30][256] = { "Hello", "Language", "Korean", "Laptop", "mouse", 
+	char englishWord[MAX_WORD_SIZE][MAX_STRING_SIZE] = { "Hello", "Language", "Korean", "Laptop", "mouse",
 								"Korea", "index", "eraser", "glue", "glasses", 
 								"TV", "computer", "coding", "Japan", "speak", 
 								"English", "mask", "hacker", "develop", "apple",
 								"facebook", "instagram", "samsung", "chicken", "print",
-								"scan", "profitable", "comfortable", "light", "sun"};
-	// 영어 단어 30개
+								"scan", "profitable", "comfortable", "light", "sun"
+	};
+	// 영어 단어 MAX_WORD_SIZE개
 
-	char sentence[30][256] = { "대덕소프트웨어마이스터고등학교 1학년 1반 2번 김경호입니다", "가는 말이 고아야 오는 말이 곱다",
+	char sentence[MAX_WORD_SIZE][MAX_STRING_SIZE] = { "대덕소프트웨어마이스터고등학교 1학년 1반 2번 김경호입니다", "가는 말이 고아야 오는 말이 곱다",
 		"티끌모아 태산", "저 분은 백 법학박사이고 이 분은 박 법학박사이다", 
 		"니 붕어 알이 크냐 내 붕어 알이 크냐", "몽실몽실 두리몽실 호박같은 내얼굴 뭉실뭉실 두리뭉실 감자같은 내엉덩이",
 		"포도밭에서 먹는 포도는 포도향기가 퐁퐁 풍기고 포장마차에서 먹는 파전은 파 냄새가 팡팡 풍긴다", "라일락꽃 같은 라이안의 처녀들이 랄라라라 랄라라라 춤을 춥니다", 
@@ -41,13 +48,40 @@ struct word {
 		"내 코가 석자", "개발자 간 빼 먹기",
 		"짧은 코드가 더 아름답다", "내일 정전이 된다 해도 나는 오늘 한 줄의 코드를 쓰겠다"
 	};
-	// 짧은 글 30개
+	// 짧은 글 MAX_WORD_SIZE개
 
 };
 // 구조체 선언
 
 int highscore[3] = { 0, }; 
 // 최고점수 전역변수로 선언
+// 1번째 배열은 1번 메뉴
+// 2번째 배열은 2번 메뉴
+// 3번째 배열은 3번 메뉴
+
+int mainMenu();
+// 함수 선언
+
+void gamevar(int n, int str, int i);
+// 함수 선언
+
+void practiceKorean();
+// 함수 선언
+
+void practiceEnglish();
+// 함수 선언
+
+void shortSentence();
+// 함수 선언
+
+void mainvar();
+// 함수 선언
+
+int main() {
+	mainvar();
+	// 함수 호출
+	return 0;
+}
 
 int mainMenu() {
 	int temp;
@@ -64,21 +98,26 @@ int mainMenu() {
 }
 // 메인메뉴 바 함수
 
-void gamevar(int n, int str) {
+void gamevar(int n, int str, int i) {
 	printf("===========================================\n");
 	printf("                 제 시 단 어               \n");
 	printf("===========================================\n");
-	printf("총 개수: %d                 맞은 개수: %d  \n\n", n, str);
+	printf("총 개수: %d | 최고기록 : %d | 맞은 개수: %d\n\n", n, highscore[i], str);
 }
 // 게임 메뉴 바 함수
 
 void practiceKorean() {
 	int random = 0;
+	// 랜덤 변수 선언
 	struct word a;
-	int str = 0; // 맞은 개수
-	char word[256];
-	char check[256];
-	int n; // 반복 횟수 변수
+	// 구조체 호출
+	int str = 0;
+	// 맞은 개수
+	char word[MAX_STRING_SIZE];
+	// 오답일때 Yes를 입력받는 문자열
+	char check[MAX_STRING_SIZE];
+	int n;
+	// 반복할 갯수 변수 선언
 	system("cls");
 	printf("===========================================\n");
 	printf("              한 글 타 자 연 습            \n");
@@ -93,8 +132,10 @@ void practiceKorean() {
 		return;
 	}
 	for (int i = 0; i < n; i++) {
-		random = rand() % 30; // 랜덤함수로 난수 설정
-		gamevar(n, str); // 상단바 실행
+		random = rand() % MAX_WORD_SIZE;
+		// 랜덤함수로 난수 설정
+		gamevar(n, str, 1);
+		// 함수 호출
 		printf("%s\n", a.koreanWord[random]);
 		printf("=> ");
 		scanf("%s", word);
@@ -103,12 +144,16 @@ void practiceKorean() {
 			str++;
 			word == NULL;
 		}
-		else { 
+		else {
 			printf("틀렸습니다.\n");
 			printf("다음으로 넘어가시려면 Yes를 입력해주세요.\n");
 			scanf("%s", check);
-			if (!strcmp(check, "Yes")) system("cls");
-			else break;
+			if (!strcmp(check, "Yes"))
+				system("cls");
+			// 참이면 실행[check == "Yes"]
+			else
+				break;
+			// 참이 아니면 실행[check != "Yes"]
 		}
 
 	}
@@ -118,10 +163,14 @@ void practiceKorean() {
 
 void practiceEnglish() {
 	int random = 0;
+	// 랜덤 변수 선언
 	int n;
-	char check[256];
-	char word[256];
+	// 반복할 갯수 변수 선언
+	char check[MAX_STRING_SIZE];
+	// 오답일때 Yes를 입력받는 문자열
+	char word[MAX_STRING_SIZE];
 	struct word b;
+	// 구조체 호출
 	int str = 0;
 	system("cls");
 	srand(time(NULL));
@@ -137,9 +186,10 @@ void practiceEnglish() {
 		return;
 	}
 	for (int i = 0; i < n; i++) {
-		random = rand() % 30; 
+		random = rand() % MAX_WORD_SIZE;
 		// 랜덤함수로 난수 설정
-		gamevar(n, str);
+		gamevar(n, str, 2);
+		// 함수 호출
 		printf("%s\n", b.englishWord[random]);
 		printf("=> ");
 		scanf("%s", word);
@@ -152,21 +202,29 @@ void practiceEnglish() {
 			printf("틀렸습니다.\n");
 			printf("다음으로 넘어가시려면 Yes를 입력해주세요.\n");
 			scanf("%s", check);
-			if (!strcmp(check, "Yes")) system("cls");
-			else break;
+			if (!strcmp(check, "Yes"))
+				system("cls");
+			// 참이면 실행[check == "Yes"]
+			else
+				break;
+			// 참이 아니면 실행[check != "Yes"]
 		}
 	}
 	printf("맞은 개수 : %d\n", str);
-	
+
 }
 // 영어 타자연습 함수
 
 void shortSentence() {
 	int random = 0;
+	// 랜덤 변수 선언
 	int n;
-	char check[256];
-	char word[256];
+	// 반복할 갯수 변수 선언
+	char check[MAX_STRING_SIZE];
+	// 오답일때 Yes를 입력받는 문자열
+	char word[MAX_STRING_SIZE];
 	struct word c;
+	// 구조체 호출
 	int str = 0;
 	system("cls");
 	srand(time(NULL));
@@ -178,8 +236,10 @@ void shortSentence() {
 	scanf("%d", &n);
 	system("cls");
 	for (int i = 0; i < n; i++) {
-		random = rand() % 30;
-		gamevar(n, str);
+		random = rand() % MAX_WORD_SIZE;
+		// 랜덤함수로 난수 설정
+		gamevar(n, str, 3);
+		// 함수 호출
 		printf("%s\n", c.sentence[random]);
 		printf("=> ");
 		scanf("%s", word);
@@ -191,8 +251,12 @@ void shortSentence() {
 			printf("틀렸습니다.\n");
 			printf("다음으로 넘어가시려면 Yes를 입력해주세요.\n");
 			scanf("%s", check);
-			if (!strcmp(check, "Yes")) system("cls");
-			else break;
+			if (!strcmp(check, "Yes"))
+				system("cls");
+			// 참이면 실행[check == "Yes"]
+			else
+				break;
+			// 참이 아니면 실행[check != "Yes"]
 		}
 	}
 	printf("맞은 개수 : %d\n", str);
@@ -202,16 +266,20 @@ void shortSentence() {
 void mainvar() {
 	int n; // 선택 변수
 	while (1) {
-		n = mainMenu(); // 선택 버튼
+		n = mainMenu();
+		// 선택 버튼
 		switch (n) {
 		case 1: // 한글 타자연습
 			practiceKorean();
+			// 함수 호출
 			break;
 		case 2: // 영문 타자연습
 			practiceEnglish();
+			// 함수 호출
 			break;
 		case 3: // 짤븐 글 연습
 			shortSentence();
+			// 함수 호출
 			break;
 		case 4: // 프로그램 종료
 			system("cls");
@@ -225,7 +293,3 @@ void mainvar() {
 	}
 }
 // 메인 선택 바 함수
-
-int main() {
-	mainvar();
-}
