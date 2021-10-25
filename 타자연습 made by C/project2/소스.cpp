@@ -1,8 +1,11 @@
 #pragma warning(disable:4996)
 #pragma warning(disable:6014)
-#define _CRT_SECURE_NO_WARNING
+#define _CRT_SECURE_NO_WARNINGS
+
 #include<stdio.h> // printf, scanf를 위한 헤더파일
 #include<stdlib.h> 
+#include<iostream>
+#include<string>
 #include<string.h>
 #include<Windows.h>
 #include<time.h>
@@ -12,6 +15,8 @@
 // Max_Size 설정
 #define MAX_STRING_SIZE 256
 // Max_String_Size 설정
+
+using namespace std;
 
 struct word {
 	char koreanWord[MAX_WORD_SIZE][MAX_STRING_SIZE] = { "책", "가방", "노트북", "스마트폴더", "의자",
@@ -59,6 +64,8 @@ int highscore[3] = { 0, };
 // 2번째 배열은 2번 메뉴
 // 3번째 배열은 3번 메뉴
 
+void loadingVar();
+
 int mainMenu();
 // 함수 선언
 
@@ -77,21 +84,40 @@ void shortSentence();
 void mainvar();
 // 함수 선언
 
+void comparison(int str, int i);
+
 int main() {
 	mainvar();
 	// 함수 호출
 	return 0;
 }
 
+void loadingVar() {
+	system("title 타자 연습");
+	for (int i = 0; i < 100; i++) {
+		printf("%d%%\n\n\n\n", i);
+		printf("로딩중입니다. \n");
+		if (i <= 50) Sleep(100);
+		else if (i > 50) Sleep(50);
+		system("cls");
+	}
+}
+
 int mainMenu() {
 	int temp;
+	int i = 0;
 	printf("===========================================\n");
 	printf("                타 자 연 습                \n");
 	printf("===========================================\n");
-	printf("1. 한글 타자연습\n");
-	printf("2. 영문 타자연습\n");
-	printf("3. 짧은 글 연습\n");
+	printf("1. 한글 타자연습\n\n");
+	printf("   한글 최고기록 : %d\n\n", highscore[i++]);
+	printf("2. 영문 타자연습\n\n");
+	printf("   영문 최고기록 : %d\n\n", highscore[i++]);
+	printf("3. 짧은 글 연습\n\n");
+	printf("   한글 최고기록 : %d\n\n", highscore[i++]);
 	printf("4. 프로그램 종료\n\n");
+	printf("※ 프로그램을 종료하면 기록이 초기화된다. \n\n\n");
+	printf("원하시는 번호를 선택하세요.[1~4까지]\n\n");
 	printf("=> ");
 	scanf("%d", &temp);
 	return temp;
@@ -113,6 +139,7 @@ void practiceKorean() {
 	// 구조체 호출
 	int str = 0;
 	// 맞은 개수
+	int m = 0;
 	char word[MAX_STRING_SIZE];
 	// 오답일때 Yes를 입력받는 문자열
 	char check[MAX_STRING_SIZE];
@@ -155,8 +182,8 @@ void practiceKorean() {
 				break;
 			// 참이 아니면 실행[check != "Yes"]
 		}
-
 	}
+	comparison(str, m);
 	printf("맞은 개수 : %d\n", str);
 }
 // 한글 타자연습 함수
@@ -164,6 +191,7 @@ void practiceKorean() {
 void practiceEnglish() {
 	int random = 0;
 	// 랜덤 변수 선언
+	int m = 1;
 	int n;
 	// 반복할 갯수 변수 선언
 	char check[MAX_STRING_SIZE];
@@ -210,6 +238,7 @@ void practiceEnglish() {
 			// 참이 아니면 실행[check != "Yes"]
 		}
 	}
+	comparison(str, m);
 	printf("맞은 개수 : %d\n", str);
 
 }
@@ -217,6 +246,7 @@ void practiceEnglish() {
 
 void shortSentence() {
 	int random = 0;
+	int m = 2;
 	// 랜덤 변수 선언
 	int n;
 	// 반복할 갯수 변수 선언
@@ -238,16 +268,19 @@ void shortSentence() {
 	for (int i = 0; i < n; i++) {
 		random = rand() % MAX_WORD_SIZE;
 		// 랜덤함수로 난수 설정
-		gamevar(n, str, 3);
+		gamevar(n, str, m);
 		// 함수 호출
 		printf("%s\n", c.sentence[random]);
 		printf("=> ");
-		scanf("%s", word);
+		/*scanf("%[^\n]s", word);*/
+		gets_s(word); // 오류 발생
+		system("cls");
 		if (!strcmp(c.sentence[random], word)) {
 			str++;
 			word == NULL;
 		}
 		else {
+
 			printf("틀렸습니다.\n");
 			printf("다음으로 넘어가시려면 Yes를 입력해주세요.\n");
 			scanf("%s", check);
@@ -259,11 +292,13 @@ void shortSentence() {
 			// 참이 아니면 실행[check != "Yes"]
 		}
 	}
+	comparison(str, m);
 	printf("맞은 개수 : %d\n", str);
 }
 // 짧은 글 연습 함수
 
 void mainvar() {
+	/*loadingVar();*/
 	int n; // 선택 변수
 	while (1) {
 		n = mainMenu();
@@ -293,3 +328,10 @@ void mainvar() {
 	}
 }
 // 메인 선택 바 함수
+
+void comparison(int str, int i) {
+	if (highscore[i] <= str) {
+		highscore[i] = str;
+	}
+	else return;
+}
