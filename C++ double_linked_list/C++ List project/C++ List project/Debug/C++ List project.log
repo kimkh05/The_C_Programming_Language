@@ -1,0 +1,5 @@
+﻿  C++ List project.cpp
+  CMyList.cpp
+C:\Users\user\source\repos\C++ List project\C++ List project\CMyList.cpp(27,25): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
+  코드를 생성하고 있습니다...
+C:\Users\user\source\repos\C++ List project\C++ List project\C++ List project.cpp(37): error C4700: 초기화되지 않은 'list' 지역 변수를 사용했습니다.
